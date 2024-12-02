@@ -1,2 +1,10 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Tfg6waJb)
 # Systems Project2 - MyShell
+
+Team Members: Gabriel, Patrick, Kartik
+
+CREATIVE TEAM NAME: Triple Red-Green Colorblindness Shells
+
+Features Successfully Implemented: Everything
+
+Bugs: Nothing
