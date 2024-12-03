@@ -11,13 +11,13 @@
 #include <signal.h>
 #include <sys/wait.h>
 
-void err(){
+void err(){ //Returns the error number and message. Ends the init process.
   printf("error number %d\n", errno);
   printf("%s\n", strerror(errno));
   exit(1);
 }
 
-void parse_args( char * line, char ** arg_ary ) {
+void parse_args( char * line, char ** arg_ary ) { //Uses strsep to separate the words in line and insert them into arg_ary. Ends arg_ary with null.
   int i = 0;
   char * token;
   while (token = strsep(& line, " ")) {
@@ -27,7 +27,7 @@ void parse_args( char * line, char ** arg_ary ) {
   arg_ary[i] = NULL;
 }
 
-void printCWD(){
+void printCWD(){ //prints the header line using getcwd and getlogin_r.
   char buf[1024];
   char * bufp = buf;
   char name[500];
