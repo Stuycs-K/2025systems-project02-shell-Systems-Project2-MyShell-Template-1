@@ -17,14 +17,9 @@ void handleInput(int argc, char * argv[]) {
   FILE * isUser;
   isUser = fopen("./input", "r");
   if (argc > 1) {
-    if (strcmp(argv[1], "user") == 0) {
-      while (fgets(buffer, 255, stdin)) {
-        int a; int b; int c;
-        sscanf(buffer, "%d %d %d", &a, &b, &c);
-      }
-    }
-    else {
-      printf("%s: command not found\n", argv);
+    while (fgets(buffer, 255, stdin)) {
+      char * arr[20];
+      parse_args(buffer, arr);
     }
   }
   else {
