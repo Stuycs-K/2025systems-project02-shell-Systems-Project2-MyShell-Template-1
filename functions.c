@@ -37,7 +37,7 @@ void printCWD(){
   printf("$ ");
 }
 
-void parse_args( char * line, char ** arg_ary ) {
+int parse_args( char * line, char ** arg_ary ) {
   int i = 0;
   char * token;
   while ((token = strsep(& line, " "))) {
@@ -45,6 +45,7 @@ void parse_args( char * line, char ** arg_ary ) {
     i++;
   }
   arg_ary[i] = NULL;
+  return i;
 }
 
 int redirection(int dest, int source){
