@@ -12,19 +12,10 @@
 #include <sys/wait.h>
 #include "functions.h"
 
-<<<<<<< HEAD
-int main(int argc, char * argv[]) {
-  // char line[128] = "echo 8 6 7 5 3 0 9";
-  // char * arr[15];
-  // parse_args(line, arr);
-  // execvp(arr[0], arr);
-  handleInput(argc, argv);
-=======
 int main() {
   char buffer[512];
   char * argAry[512];
   int status;
->>>>>>> e03cd6efc116d60e0842926c3d12180cca885ee7
   printCWD();
   while (fgets(buffer, 511, stdin)){
     printCWD();
