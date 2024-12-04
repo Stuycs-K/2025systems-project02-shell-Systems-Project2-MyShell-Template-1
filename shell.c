@@ -18,6 +18,9 @@ int main() {
   int status;
   printCWD();
   while (fgets(buffer, 511, stdin)){
+    if (strcmp(buffer, "exit\n") == 0) {
+      return 0;
+    }
     printCWD();
     buffer[strcspn(buffer, "\n")] = 0;
     parse_args(buffer, argAry);
