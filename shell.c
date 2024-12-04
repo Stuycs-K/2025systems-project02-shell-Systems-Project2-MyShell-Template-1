@@ -25,16 +25,8 @@ int main() {
     buffer[strcspn(buffer, "\n")] = 0;
     parse_args(buffer, argAry);
     int p = fork();
-    if (p==0&&CONDITION){ // CHECK FOR < AND GET NAME
-      int filename = ""//PUT NAME HERE
-      FILE* file = fopen("filename", "r");
-      int backupStdin = dup(tempStdout);
-      backupStdout = redirection(stdin,file);//redirects stdin to file
-      execvp(argAry[0],argAry);
-      fflush(stdin);
-      wait(&status);
-      dup2(stdin,backupStdin);//stdin is back to user input
-    }
+    checkLessThan(argAry);
+    
     if (p == 0) execvp(argAry[0], argAry);
     fflush(stdin);
     wait(&status);
