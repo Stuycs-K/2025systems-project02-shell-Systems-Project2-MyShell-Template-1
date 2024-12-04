@@ -22,12 +22,14 @@ int main() {
       return 0;
     }
     printCWD();
-    buffer[strcspn(buffer, "\n")] = 0;
     char * line;
+    printf("hi %s\n", buffer);
     strcpy(line, buffer);
+    printf("hey %s\n", line);
+    line[strcspn(line, "\n")] = 0;
     char * currCommand;
     while ((currCommand = strsep(& line, ";"))) {
-      parse_args(line, argAry);
+      parse_args(currCommand, argAry);
       int p = fork();
       if (p == 0) execvp(argAry[0], argAry);
       fflush(stdin);
