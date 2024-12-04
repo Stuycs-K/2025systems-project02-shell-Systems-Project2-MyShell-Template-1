@@ -46,3 +46,9 @@ void parse_args( char * line, char ** arg_ary ) { // Takes a string(line) and se
   }
   arg_ary[i] = NULL;
 }
+
+int redirection(int dest, int source){
+  int ret = dup(dest);
+  dup2(source, dest);
+  return ret;
+}
