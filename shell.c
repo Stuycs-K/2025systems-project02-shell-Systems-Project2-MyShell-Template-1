@@ -25,6 +25,12 @@ int main() {
     buffer[strcspn(buffer, "\n")] = 0;
     parse_args(buffer, argAry);
     int p = fork();
+    if (p==0&&CONDITION){ // CHECK FOR < AND GET NAME
+      int filename = ""//PUT NAME HERE
+      int tempStdout = stdin;
+      int backupStdout = dup(tempStdout);
+      backupStdout = redirection(stdin,filename);
+    }
     if (p == 0) execvp(argAry[0], argAry);
     fflush(stdin);
     wait(&status);
