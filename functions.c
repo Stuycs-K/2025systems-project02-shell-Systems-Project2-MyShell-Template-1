@@ -17,7 +17,7 @@ void err(){
   exit(1);
 }
 
-void printCWD(){ //gets the path of the user and prints it.
+void printCWD(){
   char buf[1024];
   char * bufp = buf;
   char name[500];
@@ -37,7 +37,7 @@ void printCWD(){ //gets the path of the user and prints it.
   printf("$ ");
 }
 
-void parse_args( char * line, char ** arg_ary ) { // Takes a string(line) and separates substrings by spaces into a string array(arg_ary).
+void parse_args( char * line, char ** arg_ary ) {
   int i = 0;
   char * token;
   while ((token = strsep(& line, " "))) {
@@ -45,10 +45,4 @@ void parse_args( char * line, char ** arg_ary ) { // Takes a string(line) and se
     i++;
   }
   arg_ary[i] = NULL;
-}
-
-int redirection(int dest, int source){
-  int ret = dup(dest);
-  dup2(source, dest);
-  return ret;
 }

@@ -23,11 +23,16 @@ int main() {
     }
     printCWD();
     buffer[strcspn(buffer, "\n")] = 0;
-    parse_args(buffer, argAry);
-    int p = fork();
-    if (p == 0) execvp(argAry[0], argAry);
-    fflush(stdin);
-    wait(&status);
+    char * line;
+    strcpy(line, buffer);
+    char * currCommand;
+    while ((currCommand = strsep(& line, ";"))) {
+      parse_args(line, argAry);
+      int p = fork();
+      if (p == 0) execvp(argAry[0], argAry);
+      fflush(stdin);
+      wait(&status);
+    }
   }
   printf("\n");
   return 0;
