@@ -13,10 +13,19 @@
 #include "functions.h"
 
 int main() {
-  // char line[128] = "echo 8 6 7 5 3 0 9";
-  // char * arr[15];
-  // parse_args(line, arr);
-  // execvp(arr[0], arr);
+  char buffer[512];
+  char * argAry[512];
+  int status;
   printCWD();
+  while (fgets(buffer, 511, stdin)){
+    printCWD();
+    buffer[strcspn(buffer, "\n")] = 0;
+    parse_args(buffer, argAry);
+    int p = fork();
+    if (p == 0) execvp(argAry[0], argAry);
+    fflush(stdin);
+    wait(&status);
+  }
+  printf("\n");
   return 0;
 }
