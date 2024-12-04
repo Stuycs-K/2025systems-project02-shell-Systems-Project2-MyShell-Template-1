@@ -33,6 +33,7 @@ int main() {
       fflush(stdin);
       wait(&status);
     }
+    free(line);
   }
   printf("\n");
   return 0;
