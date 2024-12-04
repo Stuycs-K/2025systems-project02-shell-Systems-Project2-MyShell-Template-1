@@ -27,9 +27,13 @@ int main() {
     int p = fork();
     if (p==0&&CONDITION){ // CHECK FOR < AND GET NAME
       int filename = ""//PUT NAME HERE
-      int tempStdout = stdin;
-      int backupStdout = dup(tempStdout);
-      backupStdout = redirection(stdin,filename);
+      FILE* file = fopen("filename", "r");
+      int backupStdin = dup(tempStdout);
+      backupStdout = redirection(stdin,file);//redirects stdin to file
+      execvp(argAry[0],argAry);
+      fflush(stdin);
+      wait(&status);
+      dup2(stdin,backupStdin);//stdin is back to user input
     }
     if (p == 0) execvp(argAry[0], argAry);
     fflush(stdin);
