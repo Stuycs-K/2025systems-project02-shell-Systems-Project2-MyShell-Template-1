@@ -22,10 +22,8 @@ int main() {
       return 0;
     }
     printCWD();
-    char * line;
-    printf("hi %s\n", buffer);
+    char * line = (char *) malloc(512);
     strcpy(line, buffer);
-    printf("hey %s\n", line);
     line[strcspn(line, "\n")] = 0;
     char * currCommand;
     while ((currCommand = strsep(& line, ";"))) {
