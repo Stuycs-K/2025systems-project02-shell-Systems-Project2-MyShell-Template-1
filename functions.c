@@ -30,8 +30,11 @@ void printCWD(){
   char tilda[1024];
   strcpy(tilda, "~");
   strcat(tilda, bufp);
-  strcat(tilda, "$");
-  printf("%s\n", tilda);
+  printf("\033[34m");
+  printf("\033[1m");
+  printf("%s", tilda);
+  printf("\33[0m");
+  printf("$ ");
 }
 
 void parse_args( char * line, char ** arg_ary ) {
