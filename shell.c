@@ -22,7 +22,6 @@ int main() {
       return 0;
     }
     printCWD();
-<<<<<<< HEAD
     char * line = (char *) malloc(512);
     strcpy(line, buffer);
     line[strcspn(line, "\n")] = 0;
@@ -35,16 +34,6 @@ int main() {
       wait(&status);
     }
     free(line);
-=======
-    buffer[strcspn(buffer, "\n")] = 0;
-    parse_args(buffer, argAry);
-    int p = fork();
-    checkLessThan(argAry);
-    
-    if (p == 0) execvp(argAry[0], argAry);
-    fflush(stdin);
-    wait(&status);
->>>>>>> WahlinK
   }
   printf("\n");
   return 0;
