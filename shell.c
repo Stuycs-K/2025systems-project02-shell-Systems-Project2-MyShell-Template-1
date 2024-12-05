@@ -27,12 +27,17 @@ int main() {
     line[strcspn(line, "\n")] = 0;
     char * currCommand;
     while ((currCommand = strsep(& line, ";"))) {
-      if (parse_args(currCommand, argAry)) {
+      char result[64];
+      strcpy(result, parse_args(currCommand, argAry, ""));
+      if (strcmp(result, "") == 0) {
         int p = fork();
         if (p == 0) execvp(argAry[0], argAry);
+      }
+      else {
+        chdir(result);
+      }
         fflush(stdin);
         wait(&status);
-      }
     }
     free(line);
   }
