@@ -67,7 +67,12 @@ int run(char** argAry){
   }
   if (checkFile=='y'){ // CHECK FOR < AND GET NAME
     int file = open(argAry[i+1], O_RDONLY);
+
+    int backupStdin;
+    backupStdin = redirection(file,0);//redirects stdin to file
+
     redirection(file,0);//redirects stdin to file
+
   }
   execvp(argAry[0],argAry);
   fflush(stdin);

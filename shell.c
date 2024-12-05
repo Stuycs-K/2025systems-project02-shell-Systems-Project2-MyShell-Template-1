@@ -29,12 +29,12 @@ int main() {
     while ((currCommand = strsep(& line, ";"))) {
       parse_args(currCommand, argAry);
       int p = fork();
-      if (p == 0){
-        run(argAry);
-      }
+      if (p == 0) execvp(argAry[0], argAry);
       fflush(stdin);
       wait(&status);
     }
     free(line);
   }
+  printf("\n");
+  return 0;
 }
