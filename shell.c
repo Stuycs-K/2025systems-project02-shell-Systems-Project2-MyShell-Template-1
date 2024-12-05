@@ -16,7 +16,6 @@ int main() {
   char buffer[512];
   char * argAry[512];
   int status;
-  int redirBackup = 1;
   printCWD();
   while (fgets(buffer, 511, stdin)){
     if (strcmp(buffer, "exit\n") == 0) {

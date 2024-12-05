@@ -55,25 +55,22 @@ int redirection(int dest, int source){
 }
 
 int run(char** argAry){
-  char filename[124];
   int i=0;
   char checkFile='n'; // n or y - Determines whether this iteration has the file to redirect. Char because it takes 1 byte.
   while(argAry[i]!=NULL){
-    if(checkFile=='y'){
-       strcpy(filename,argAry[i]);
-       printf("%s",filename);
-      break;
-      }
-    if(strcmp(argAry[i],"<")==0) checkFile='y';
+    if(*argAry[i]=='<'){
+      argAry[i]=NULL;
+      checkFile='y';
+      printf("Redir file: %s",argAry[i+1]);
+     break;
+    }
     i++;
   }
   if (checkFile=='y'){ // CHECK FOR < AND GET NAME
-    FILE* file = fopen("filename", "r");
-    int backupStdin ;
-    backupStdin = redirection(STDIN_FILENO,fileno(file));//redirects stdin to file
-    execvp(argAry[0],argAry);
-    wait(NULL);
-    dup2(STDIN_FILENO,backupStdin);//stdin is back to user input
+    int file = open(argAry[i+1], O_RDONLY);
+    redirection(file,0);//redirects stdin to file
   }
+  execvp(argAry[0],argAry);
+  fflush(stdin);
   return 0;
 }
