@@ -37,7 +37,7 @@ void printCWD(){
   printf("$ ");
 }
 
-void parse_args( char * line, char ** arg_ary ) {
+int parse_args( char * line, char ** arg_ary ) {
   int i = 0;
   char * token;
   while ((token = strsep(& line, " "))) {
@@ -45,9 +45,8 @@ void parse_args( char * line, char ** arg_ary ) {
     i++;
   }
   arg_ary[i] = NULL;
+  return i;
 }
-<<<<<<< HEAD
-=======
 
 int redirection(int source, int dest){
   int ret = dup(dest);
@@ -55,7 +54,7 @@ int redirection(int source, int dest){
   return ret;
 }
 
-int checkLessThan(char** argAry){
+int run(char** argAry){
   int i=0;
   char checkFile='n'; // n or y - Determines whether this iteration has the file to redirect. Char because it takes 1 byte.
   while(argAry[i]!=NULL){
@@ -69,11 +68,14 @@ int checkLessThan(char** argAry){
   }
   if (checkFile=='y'){ // CHECK FOR < AND GET NAME
     int file = open(argAry[i+1], O_RDONLY);
+<<<<<<< HEAD
     int backupStdin;
     backupStdin = redirection(file,0);//redirects stdin to file
+=======
+    redirection(file,0);//redirects stdin to file
+>>>>>>> main
   }
   execvp(argAry[0],argAry);
   fflush(stdin);
   return 0;
 }
->>>>>>> WahlinK
