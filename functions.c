@@ -58,10 +58,9 @@ int run(char** argAry){
   int i=0;
   char checkFile='n'; // n or y - Determines whether this iteration has the file to redirect. Char because it takes 1 byte.
   while(argAry[i]!=NULL){
-    if(*argAry[i]=='<'){
+    if(argAry[i][0]=='<'){
       argAry[i]=NULL;
       checkFile='y';
-      printf("Redir file: %s",argAry[i+1]);
      break;
     }
     i++;
