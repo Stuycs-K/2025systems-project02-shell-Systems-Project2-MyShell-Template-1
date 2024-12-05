@@ -37,14 +37,18 @@ void printCWD(){
   printf("$ ");
 }
 
-void parse_args( char * line, char ** arg_ary ) {
+int parse_args( char * line, char ** arg_ary ) {
   int i = 0;
   char * token;
   while ((token = strsep(& line, " "))) {
+    if (i == 0 && strcmp(token, "cd") == 0) {
+      return 1;
+    }
     arg_ary[i] = token;
     i++;
   }
   arg_ary[i] = NULL;
+  return 0;
 }
 
 int redirection(int dest, int source){
