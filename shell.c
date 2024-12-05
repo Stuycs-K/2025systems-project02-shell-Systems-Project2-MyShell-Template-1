@@ -19,15 +19,13 @@ int main() {
   printCWD();
   while (fgets(buffer, 511, stdin)){
     if (strcmp(buffer, "exit\n") == 0) {
-      return 0;
+      exit(0);
     }
     printCWD();
     buffer[strcspn(buffer, "\n")] = 0;
     parse_args(buffer, argAry);
     int p = fork();
-    checkLessThan(argAry);
-    
-    if (p == 0) execvp(argAry[0], argAry);
+    if (p == 0) checkLessThan(argAry);
     fflush(stdin);
     wait(&status);
   }
