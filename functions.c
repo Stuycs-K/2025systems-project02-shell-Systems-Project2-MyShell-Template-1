@@ -54,7 +54,7 @@ int redirection(int dest, int source){
   return ret;
 }
 
-int checkLessThan(char** argAry){
+int run(char** argAry){
   char filename[124];
   int i=0;
   char checkFile='n'; // n or y - Determines whether this iteration has the file to redirect. Char because it takes 1 byte.
@@ -72,7 +72,6 @@ int checkLessThan(char** argAry){
     int backupStdin ;
     backupStdin = redirection(STDIN_FILENO,fileno(file));//redirects stdin to file
     execvp(argAry[0],argAry);
-    fflush(stdin);
     wait(NULL);
     dup2(STDIN_FILENO,backupStdin);//stdin is back to user input
   }
