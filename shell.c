@@ -29,7 +29,9 @@ int main() {
     while ((currCommand = strsep(& line, ";"))) {
       parse_args(currCommand, argAry);
       int p = fork();
-      if (p == 0) execvp(argAry[0], argAry);
+      if (p == 0){
+        run(argAry);
+      }
       fflush(stdin);
       wait(&status);
     }
