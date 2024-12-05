@@ -70,7 +70,7 @@ int run(char** argAry){
 
     int backupStdin;
     backupStdin = redirection(file,0);//redirects stdin to file
-=======
+
     redirection(file,0);//redirects stdin to file
 
   }
