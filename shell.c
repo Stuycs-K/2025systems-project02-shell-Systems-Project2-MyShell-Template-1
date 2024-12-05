@@ -31,6 +31,9 @@ int main() {
       int p = fork();
       if (p == 0){
         run(argAry);
+        if(errno!=0){
+          kill(getpid(),SIGQUIT);
+        }
       }
       fflush(stdin);
       wait(&status);
