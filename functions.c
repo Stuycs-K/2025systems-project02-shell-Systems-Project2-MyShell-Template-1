@@ -56,18 +56,32 @@ int redirection(int source, int dest){
 
 int run(char** argAry){
   int i=0;
-  char checkFile='n'; // n or y - Determines whether this iteration has the file to redirect. Char because it takes 1 byte.
+  int j=0;
+  char lessthan='n';
+  char gtthan='n'; // n or y - Determines whether this iteration has the file to redirect. Char because it takes 1 byte.
   while(argAry[i]!=NULL){
     if(argAry[i][0]=='<'){
       argAry[i]=NULL;
-      checkFile='y';
+      lessthan='y';
      break;
     }
     i++;
   }
-  if (checkFile=='y'){ // CHECK FOR < AND GET NAME
+  while(argAry[j]!=NULL){
+    if(argAry[j][0]=='>'){
+      argAry[j]=NULL;
+      gtthan='y';
+     break;
+    }
+    j++;
+  }
+  if (lessthan=='y'){ // CHECK FOR < AND GET NAME
     int file = open(argAry[i+1], O_RDONLY);
     redirection(file,0);//redirects stdin to file
+  }
+  if (gtthan=='y'){ // CHECK FOR < AND GET NAME
+    int file = open(argAry[j+1], O_CREAT|O_RDWR|O_APPEND, 0644);
+    redirection(1, file);//redirects stdin to file
   }
   execvp(argAry[0],argAry);
   fflush(stdin);
