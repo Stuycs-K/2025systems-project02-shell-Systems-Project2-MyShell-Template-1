@@ -47,8 +47,6 @@ int parse_args( char * line, char ** arg_ary ) {
   arg_ary[i] = NULL;
   return i;
 }
-<<<<<<< HEAD
-=======
 
 int redirection(int dest, int source){
   int ret = dup(dest);
@@ -80,4 +78,3 @@ int checkLessThan(char** argAry){
   }
   return 0;
 }
->>>>>>> WahlinK

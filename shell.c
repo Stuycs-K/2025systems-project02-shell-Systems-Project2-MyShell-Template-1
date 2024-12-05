@@ -23,7 +23,6 @@ int main() {
       return 0;
     }
     printCWD();
-<<<<<<< HEAD
     char * line = (char *) malloc(512);
     strcpy(line, buffer);
     line[strcspn(line, "\n")] = 0;
@@ -36,27 +35,5 @@ int main() {
       wait(&status);
     }
     free(line);
-=======
-    buffer[strcspn(buffer, "\n")] = 0;
-    int len = parse_args(buffer, argAry);
-    for (int i = 0; i < len; i ++){
-      if (argAry[i][0] == '>'){
-        int file = open(argAry[i+1], O_CREAT|O_RDWR|O_APPEND, 0644);
-        dup2(file, 1);
-        // argAry[i] = NULL;
-        // argAry[i+1] = NULL;
-      }
-    }
-    if (redirBackup < 0) err();
-    int p = fork();
-    checkLessThan(argAry);
-    
-    if (p == 0) execvp(argAry[0], argAry);
-    fflush(stdin);
-    dup2(redirBackup, 1);
-    wait(&status);
->>>>>>> WahlinK
   }
-  printf("\n");
-  return 0;
 }
