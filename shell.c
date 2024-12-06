@@ -31,10 +31,14 @@ int main() {
       strcpy(result, parse_args(currCommand, argAry, ""));
       if (strcmp(result, "") == 0) {
         int p = fork();
-        if (p == 0) execvp(argAry[0], argAry);
+        if (p == 0) {
+          printCWD();
+          execvp(argAry[0], argAry);
+        }
       }
       else {
         chdir(result);
+        printCWD();
       }
         fflush(stdin);
         wait(&status);
