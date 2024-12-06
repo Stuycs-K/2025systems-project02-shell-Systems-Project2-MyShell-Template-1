@@ -54,36 +54,38 @@ int redirection(int source, int dest){
   return ret;
 }
 
-int run(char** argAry){
-  int i=0;
-  int j=0;
-  char lessthan='n';
-  char gtthan='n'; // n or y - Determines whether this iteration has the file to redirect. Char because it takes 1 byte.
-  while(argAry[i]!=NULL){
-    if(argAry[i][0]=='<'){
-      argAry[i]=NULL;
-      lessthan='y';
-     break;
+int run(char** argAry, int len){
+  int i = 0;
+  int pipeLoc = 0;
+  int inputLoc = 0;
+  int outputLoc = 0; //Determines whether this iteration has the file to redirect. Char because it takes 1 byte.
+  while(i < len){
+    if(argAry[i][0] == '<'){
+      argAry[i] = NULL;
+      inputLoc = i;
+    }
+    else if (argAry[i][0] == '>'){
+      argAry[i] = NULL;
+      outputLoc = i;
+    }
+    else if (argAry[i][0] == '|'){
+      argAry[i] = NULL;
+      pipeLoc = i;
     }
     i++;
   }
-  while(argAry[j]!=NULL){
-    if(argAry[j][0]=='>'){
-      argAry[j]=NULL;
-      gtthan='y';
-     break;
-    }
-    j++;
+  if (inputLoc > 0){ // CHECK FOR < AND GET NAME
+    int fileREAD = open(argAry[inputLoc + 1], O_RDONLY);
+    redirection(fileREAD,0);//redirects stdin to file
   }
-  if (lessthan=='y'){ // CHECK FOR < AND GET NAME
-    int file = open(argAry[i+1], O_RDONLY);
-    redirection(file,0);//redirects stdin to file
+  if (outputLoc > 0){ // CHECK FOR < AND GET NAME
+    int fileWRITE = open(argAry[outputLoc + 1], O_CREAT|O_RDWR|O_APPEND, 0644);
+    dup2(fileWRITE, 1);//redirects file to stdout
   }
-  if (gtthan=='y'){ // CHECK FOR < AND GET NAME
-    int file = open(argAry[j+1], O_CREAT|O_RDWR|O_APPEND, 0644);
-    redirection(1, file);//redirects stdin to file
+  if (pipeLoc > 0){
+    //soon to be done;
   }
   execvp(argAry[0],argAry);
-  fflush(stdin);
+  fflush(NULL);
   return 0;
 }

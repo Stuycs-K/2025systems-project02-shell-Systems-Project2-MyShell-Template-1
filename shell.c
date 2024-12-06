@@ -27,11 +27,13 @@ int main() {
     line[strcspn(line, "\n")] = 0;
     char * currCommand;
     while ((currCommand = strsep(& line, ";"))) {
-      parse_args(currCommand, argAry);
+      int len = parse_args(currCommand, argAry);
       int p = fork();
       if (p == 0){
-        run(argAry);
+        run(argAry, len);
         if(errno!=0){
+          printf("Error number %d\n", errno);
+          printf("%s\n", strerror(errno));
           kill(getpid(),SIGQUIT);
         }
       }
