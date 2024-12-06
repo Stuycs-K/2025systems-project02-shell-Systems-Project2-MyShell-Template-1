@@ -21,7 +21,6 @@ int main() {
     if (strcmp(buffer, "exit\n") == 0) {
       return 0;
     }
-    printCWD();
     char * line = (char *) malloc(512);
     strcpy(line, buffer);
     line[strcspn(line, "\n")] = 0;
@@ -32,17 +31,16 @@ int main() {
       if (strcmp(result, "") == 0) {
         int p = fork();
         if (p == 0) {
-          printCWD();
           execvp(argAry[0], argAry);
         }
       }
       else {
         chdir(result);
-        printCWD();
       }
         fflush(stdin);
         wait(&status);
     }
+    printCWD();
     free(line);
   }
   printf("\n");
