@@ -11,13 +11,13 @@
 #include <signal.h>
 #include <sys/wait.h>
 
-void err(){
+void err(){//Prints the error and its error number using errno, then exits the process.
   printf("error number %d\n", errno);
   printf("%s\n", strerror(errno));
   exit(1);
 }
 
-void printCWD(){
+void printCWD(){//Prints the command line based on the current directory.
   char buf[1024];
   char * bufp = buf;
   char name[500];
@@ -37,7 +37,7 @@ void printCWD(){
   printf("$ ");
 }
 
-int parse_args( char * line, char ** arg_ary ) {
+int parse_args( char * line, char ** arg_ary ) {//Takes a line and string array. Separates the line into words to be appended to the string array, then appends a null pointer, returning its index.
   int i = 0;
   char * token;
   while ((token = strsep(& line, " "))) {
@@ -48,13 +48,13 @@ int parse_args( char * line, char ** arg_ary ) {
   return i;
 }
 
-int redirection(int source, int dest){
+int redirection(int source, int dest){//Redirects dest from source, Can take ints like stdin/out and file pointers. Returns dest's initial file descriptor.
   int ret = dup(dest);
   dup2(source, dest);
   return ret;
 }
 
-int run(char** argAry, int len){
+int run(char** argAry, int len){//Takes a string list and its length. Identifies and responds to < > and | redirectors by redirecting certain file descriptors, and then executes the line as it would execute in bash.
   int i = 0;
   int pipeLoc = 0;
   int inputLoc = 0;
