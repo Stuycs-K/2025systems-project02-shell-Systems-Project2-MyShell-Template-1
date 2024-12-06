@@ -5,6 +5,25 @@ Team Members: Gabriel, Patrick, Kartik
 
 CREATIVE TEAM NAME: Triple Red-Green Colorblindness Shells
 
-Features Successfully Implemented: Everything
+Features Successfully Implemented: 
+<br/>
 
 Bugs: Nothing
+
+Function Headers:
+
+shell.c - 
+<br/>
+&emsp;int main();
+
+functions.c -
+<br/>
+&emsp;void err();
+<br/>
+&emsp;void printCWD();
+<br/>
+&emsp;int parse_args( char * line, char ** arg_ary );
+<br/>
+&emsp;int redirection(int source, int dest);
+<br/>
+&emsp;int run(char** argAry, int len);
