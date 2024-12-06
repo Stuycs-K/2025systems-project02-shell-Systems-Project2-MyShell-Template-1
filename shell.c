@@ -26,19 +26,23 @@ int main() {
     line[strcspn(line, "\n")] = 0;
     char * currCommand;
     while ((currCommand = strsep(& line, ";"))) {
-      char result[64];
-      strcpy(result, parse_args(currCommand, argAry, ""));
-      if (strcmp(result, "") == 0) {
-        int p = fork();
-        if (p == 0) {
-          execvp(argAry[0], argAry);
-        }
+      int len = parse_args(currCommand, argAry);
+      if (strcmp(argAry[0], "cd") == 0) {
+        chdir(argAry[1]);
       }
       else {
-        chdir(result);
+        int p = fork();
+        if (p == 0){
+          run(argAry, len);
+          if(errno!=0){
+            printf("Error number %d\n", errno);
+            printf("%s\n", strerror(errno));
+            kill(getpid(),SIGQUIT);
+          }
+        }
       }
-        fflush(stdin);
-        wait(&status);
+      fflush(stdin);
+      wait(&status);
     }
     printCWD();
     free(line);

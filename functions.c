@@ -37,18 +37,15 @@ void printCWD(){
   printf("$ ");
 }
 
-char * parse_args( char * line, char ** arg_ary, char * fake ) {
+int parse_args( char * line, char ** arg_ary ) {
   int i = 0;
   char * token;
   while ((token = strsep(& line, " "))) {
-    if (i == 0 && strcmp(token, "cd") == 0) {
-      return line;
-    }
     arg_ary[i] = token;
     i++;
   }
   arg_ary[i] = NULL;
-  return fake;
+  return i;
 }
 
 int redirection(int source, int dest){
@@ -57,27 +54,38 @@ int redirection(int source, int dest){
   return ret;
 }
 
-int checkLessThan(char** argAry){
-  char filename[124];
-  int i=0;
-  char checkFile='n'; // n or y - Determines whether this iteration has the file to redirect. Char because it takes 1 byte.
-  while(argAry[i]!=NULL){
-    if(checkFile=='y'){
-       strcpy(filename,argAry[i]);
-       printf("%s",filename);
-      break;
-      }
-    if(strcmp(argAry[i],"<")==0) checkFile='y';
+int run(char** argAry, int len){
+  int i = 0;
+  int pipeLoc = 0;
+  int inputLoc = 0;
+  int outputLoc = 0; //Determines whether this iteration has the file to redirect. Char because it takes 1 byte.
+  while(i < len){
+    if(argAry[i][0] == '<'){
+      argAry[i] = NULL;
+      inputLoc = i;
+    }
+    else if (argAry[i][0] == '>'){
+      argAry[i] = NULL;
+      outputLoc = i;
+    }
+    else if (argAry[i][0] == '|'){
+      argAry[i] = NULL;
+      pipeLoc = i;
+    }
     i++;
   }
-  if (checkFile=='y'){ // CHECK FOR < AND GET NAME
-    FILE* file = fopen("filename", "r");
-    int backupStdin ;
-    backupStdin = redirection(STDIN_FILENO,fileno(file));//redirects stdin to file
-    execvp(argAry[0],argAry);
-    fflush(stdin);
-    wait(NULL);
-    dup2(STDIN_FILENO,backupStdin);//stdin is back to user input
+  if (inputLoc > 0){ // CHECK FOR < AND GET NAME
+    int fileREAD = open(argAry[inputLoc + 1], O_RDONLY);
+    redirection(fileREAD,0);//redirects stdin to file
   }
+  if (outputLoc > 0){ // CHECK FOR < AND GET NAME
+    int fileWRITE = open(argAry[outputLoc + 1], O_CREAT|O_RDWR|O_APPEND, 0644);
+    dup2(fileWRITE, 1);//redirects file to stdout
+  }
+  if (pipeLoc > 0){
+    //soon to be done;
+  }
+  execvp(argAry[0],argAry);
+  fflush(NULL);
   return 0;
 }
