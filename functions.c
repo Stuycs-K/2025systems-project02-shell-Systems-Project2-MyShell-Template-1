@@ -77,7 +77,7 @@ int run(char** argAry, int len){//Takes a string list and its length. Identifies
   if (pipeLoc > 0){
     int status;
     int backup = 1;
-    int temp = open("tempmpmp.txt", O_CREAT|O_RDWR|O_APPEND, 0644);
+    int temp = open("tempmpmp.txt", O_CREAT|O_RDWR|O_TRUNC, 0644);
     if (inputLoc > 0){ // CHECK FOR < AND GET NAME
       int fileREAD = open(argAry[inputLoc + 1], O_RDONLY);
       redirection(fileREAD,0);//redirects stdin to file
@@ -87,6 +87,7 @@ int run(char** argAry, int len){//Takes a string list and its length. Identifies
     if (q == 0) {
       backup = redirection(temp,1);
       execvp(argAry[0],argAry);
+      fflush(NULL);
     }
     redirection(backup, 1);
     if (outputLoc > 0){ // CHECK FOR < AND GET NAME
@@ -94,10 +95,8 @@ int run(char** argAry, int len){//Takes a string list and its length. Identifies
       redirection(fileWRITE, 1);//redirects file to stdout
     }
     redirection(temp, 0);
-    q = fork();
-    if (q != 0) wait(&status);
-    if (q == 0) execvp(argAry[pipeLoc + 1],argAry);
-    remove("tempmpmp.txt");
+    execvp(argAry[pipeLoc + 1],argAry);
+    //remove("tempmpmp.txt");
     fflush(NULL);
     return 0;
   }
