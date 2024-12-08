@@ -21,7 +21,7 @@ Features Successfully Implemented:
 
 Bugs: 
 <br/>
-&emsp;Currently pipes don't work
+&emsp;None found so far.
 
 Function Headers:
 

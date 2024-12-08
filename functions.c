@@ -80,6 +80,7 @@ int run(char** argAry, int len){//Takes a string list and its length. Identifies
     int temp = open("tempmpmp.txt", O_CREAT|O_RDWR|O_TRUNC, 0644);
     if (inputLoc > 0){ // CHECK FOR < AND GET NAME
       int fileREAD = open(argAry[inputLoc + 1], O_RDONLY);
+      if (fileREAD < 0) err();
       redirection(fileREAD,0);//redirects stdin to file
     }
     int q = fork();
@@ -87,27 +88,35 @@ int run(char** argAry, int len){//Takes a string list and its length. Identifies
     if (q == 0) {
       backup = redirection(temp,1);
       execvp(argAry[0],argAry);
-      fflush(NULL);
     }
     redirection(backup, 1);
     if (outputLoc > 0){ // CHECK FOR < AND GET NAME
       int fileWRITE = open(argAry[outputLoc + 1], O_CREAT|O_RDWR|O_APPEND, 0644);
+      if (fileWRITE < 0) err();
       redirection(fileWRITE, 1);//redirects file to stdout
     }
-    redirection(temp, 0);
-    execvp(argAry[pipeLoc + 1],argAry);
-    //remove("tempmpmp.txt");
+    temp = open("tempmpmp.txt", O_RDONLY);
+    redirection(temp,0);//redirects stdin to file
+    char ** tempAry = &argAry[pipeLoc + 1];
+    int p = fork();
+    if (p != 0) wait(&status);
+    if (p == 0){
+      execvp(argAry[pipeLoc + 1],tempAry);
+    }
+    remove("tempmpmp.txt");
     fflush(NULL);
-    return 0;
+    exit(0);
   }
 
   if (inputLoc > 0){ // CHECK FOR < AND GET NAME
     int fileREAD = open(argAry[inputLoc + 1], O_RDONLY);
+    if (fileREAD < 0) err();
     redirection(fileREAD,0);//redirects stdin to file
   }
 
   if (outputLoc > 0){ // CHECK FOR < AND GET NAME
     int fileWRITE = open(argAry[outputLoc + 1], O_CREAT|O_RDWR|O_APPEND, 0644);
+    if (fileWRITE < 0) err();
     redirection(fileWRITE, 1);//redirects file to stdout
   }
   execvp(argAry[0],argAry);
