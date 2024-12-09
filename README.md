@@ -5,7 +5,7 @@ Team Members: Gabriel, Patrick, Kartik
 
 CREATIVE TEAM NAME: Triple Red-Green Colorblindness Shells
 
-Features Successfully Implemented: 
+Features Successfully Implemented:
 <br/>
 &emsp;Prompts user for input with directory path (starting with ~) and $
 <br/>
@@ -18,14 +18,17 @@ Features Successfully Implemented:
 &emsp;Performs commands separated by semicolons in one line
 <br/>
 &emsp;Accepts redirection operators
+<br/>
+&emsp;Accepts pipe: | operators
 
-Bugs: 
+
+Bugs:
 <br/>
 &emsp;None found so far.
 
 Function Headers:
 
-shell.c - 
+shell.c -
 <br/>
 &emsp;int main();
 
