@@ -42,6 +42,7 @@ int main() {
         }
       }
       fflush(stdin);
+      wait (&status);
     }
     printCWD();
     free(line);
